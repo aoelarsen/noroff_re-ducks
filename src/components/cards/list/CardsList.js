@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { cardMethods } from "../../../redux/ducks/cards";
+import { cardMethods, cardSelectors } from "../../../redux/ducks/cards";
 import { BASE_URL } from "../../../constants/API";
 import Spinner from "react-bootstrap/Spinner";
 import Search from "./Search";
@@ -97,7 +97,7 @@ CardsList.propTypes = {
 
 const mapStateToProps = store => {
   return {
-    cards: store.cardsReducer.cardsArray,
+    cards: cardSelectors.getCardsArray(store),
     isLoading: store.cardsReducer.isLoadingCards,
     inputValue: store.cardsReducer.inputValue,
     filteredCards: store.cardsReducer.filteredCards,

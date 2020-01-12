@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { cardSelectors } from "../../../redux/ducks/cards";
 import Spinner from "react-bootstrap/Spinner";
 import CardDetail from "./CardDetail";
 
@@ -37,7 +38,7 @@ CardDetailContainer.propTypes = {
 
 const mapStateToProps = store => {
   return {
-    cards: store.cardsReducer.cardsArray,
+    cards: cardSelectors.getCardsArray(store),
     hasLoadedCards: store.cardsReducer.hasLoadedCards
   };
 };
