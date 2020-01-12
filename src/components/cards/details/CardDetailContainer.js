@@ -8,12 +8,12 @@ import Heading from "../../ui/heading/Heading";
 import SectionContainer from "../../ui/SectionContainer";
 import SpinnerContainer from "../../ui/SpinnerContainer";
 
-const CardDetailContainer = ({ isLoading, cards, match }) => {
+const CardDetailContainer = ({ hasLoadedCards, cards, match }) => {
   const id = match.params.id;
   const singleCard = cards.filter(card => card.id === id);
   const details = singleCard[0];
 
-  if (isLoading || !details) {
+  if (!hasLoadedCards || !details) {
     return (
       <SpinnerContainer>
         <Spinner animation="border" className="spinner" />
@@ -32,13 +32,13 @@ const CardDetailContainer = ({ isLoading, cards, match }) => {
 CardDetailContainer.propTypes = {
   match: PropTypes.object.isRequired,
   cards: PropTypes.array.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  hasLoadedCards: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = store => {
   return {
-    cards: store.cardsCollection.allCards,
-    isLoading: store.isLoading.isLoading
+    cards: store.cardsReducer.cardsArray,
+    hasLoadedCards: store.cardsReducer.hasLoadedCards
   };
 };
 
