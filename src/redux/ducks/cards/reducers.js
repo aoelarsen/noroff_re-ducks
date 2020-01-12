@@ -2,41 +2,59 @@ import * as types from "./types";
 
 /* State shape
 {
-  allCards: [],
+  isLoadingCards: bool,
+  hasLoadedCards: bool,
+  cards: [],
   filteredCards: [],
   inputValue: string,
-  isLoading: bool
 }
 */
 
 const initialState = {
-  allCards: [],
+  isLoadingCards: false,
+  hasLoadedCards: false,
+  cardsArray: [],
   filteredCards: [],
-  inputValue: ""
+  inputValue: "",
+  serverError: null
 };
 
 const cardsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.FETCH_CARDS:
+    case types.LOAD_CARDS_BEGIN:
       return {
         ...state,
-        allCards: action.payload
+        isLoadingCards: true
       };
+
+    case types.LOAD_CARDS_SUCCESS:
+      return {
+        ...state,
+        isLoadingCards: false,
+        hasLoadedCards: true,
+        cardsArray: action.payload
+      };
+
+    case types.LOAD_CARDS_ERROR:
+      return {
+        ...state,
+        isLoadingCards: false,
+        hasLoadedCards: true,
+        serverError: action.payload
+      };
+
     case types.INPUT_VALUE:
       return {
         ...state,
         inputValue: action.payload
       };
+
     case types.FILTER_CARDS:
       return {
         ...state,
         filteredCards: action.payload
       };
-    case types.SET_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload
-      };
+
     default:
       return state;
   }

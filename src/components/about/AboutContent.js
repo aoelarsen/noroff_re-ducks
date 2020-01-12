@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { toggleInfo } from "../../redux/actions";
+import { toggleMethods } from "../../redux/ducks/toggle";
 import Collapse from "react-bootstrap/Collapse";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -110,8 +110,10 @@ AboutContent.propTypes = {
 
 const mapStateToProps = store => {
   return {
-    isVisible: store.toggleInfo.isVisible
+    isVisible: store.toggleReducer.isVisible
   };
 };
 
-export default connect(mapStateToProps, { toggleInfo })(AboutContent);
+export default connect(mapStateToProps, {
+  toggleInfo: toggleMethods.toggleInfo
+})(AboutContent);

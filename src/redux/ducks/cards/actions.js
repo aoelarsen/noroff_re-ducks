@@ -1,29 +1,35 @@
 import * as types from "./types";
 
-export function fetchCards(cardsArray) {
+export const loadCardsBegin = () => {
   return {
-    type: types.FETCH_CARDS,
-    payload: cardsArray
+    type: types.LOAD_CARDS_BEGIN
   };
-}
+};
 
-export function setFilteredCards(filteredArray) {
+export const loadCardsSuccess = cards => {
+  return {
+    type: types.LOAD_CARDS_SUCCESS,
+    payload: cards
+  };
+};
+
+export const loadCardsError = error => {
+  return {
+    type: types.LOAD_CARDS_ERROR,
+    payload: error
+  };
+};
+
+export const setFilteredCards = filteredArray => {
   return {
     type: types.FILTER_CARDS,
     payload: filteredArray
   };
-}
+};
 
-export function setInputValue(input) {
+export const setInputValue = input => {
   return {
     type: types.INPUT_VALUE,
     payload: input
   };
-}
-
-export function setLoading(bool) {
-  return {
-    type: types.SET_LOADING,
-    paylaod: bool
-  };
-}
+};

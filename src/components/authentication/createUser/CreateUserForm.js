@@ -4,7 +4,7 @@ import useForm from "react-hook-form";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { addUser } from "../../../redux/actions";
+import { addUser } from "../../../redux/ducks/authentication/methods";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";

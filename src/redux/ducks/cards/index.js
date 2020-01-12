@@ -1,5 +1,7 @@
-import fetchCardsReducer from "./reducers";
+import cardsReducer from "./reducers";
+import * as cardMethods from "./methods";
+import * as cardSelectors from "./selectors";
 
-export { default as fetchCardsType } from "./types";
+export { cardMethods, cardSelectors };
 
-export default fetchCardsReducer;
+export default cardsReducer;

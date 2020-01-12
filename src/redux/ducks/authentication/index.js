@@ -1,5 +1,6 @@
 import authReducer from "./reducers";
+import * as authMethods from "./methods";
 
-export { default as authTypes } from "./types";
+export { authMethods };
 
 export default authReducer;

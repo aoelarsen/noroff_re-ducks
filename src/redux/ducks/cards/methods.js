@@ -1,80 +1,44 @@
-import {
-  FETCH_CARDS,
-  SET_LOADING,
-  FILTER_CARDS,
-  FETCH_SINGLE_CARD
-} from "../searchCards/types";
+import * as actions from "./actions";
 import fetchMock from "fetch-mock";
 import mockCards from "../../../constants/cards";
 
-export const mockFetchCards = url => dispatch => {
-  dispatch({
-    type: SET_LOADING,
-    payload: true
-  });
+const mockGetCards = url => async dispatch => {
+  dispatch(actions.loadCardsBegin());
+
   fetchMock.mock(url, { cards: mockCards });
 
-  fetch(url)
-    .then(res => res.json())
-    .then(json => {
-      dispatch({
-        type: FETCH_CARDS,
-        payload: json.cards
-      });
-      dispatch({
-        type: FILTER_CARDS,
-        payload: json.cards
-      });
-      dispatch({
-        type: SET_LOADING,
-        payload: false
-      });
-    })
-    .catch(error => console.error(error));
-
-  fetchMock.reset();
+  try {
+    await fetch(url)
+      .then(response => response.json())
+      .then(jsonResponse => {
+        dispatch(actions.loadCardsSuccess(jsonResponse.cards));
+        dispatch(actions.setFilteredCards(jsonResponse.cards));
+      })
+      .catch(error => actions.loadCardsError(error));
+  } catch (error) {
+    dispatch(actions.loadCardsError(error));
+  } finally {
+    fetchMock.reset();
+  }
 };
 
-export const fetchCards = url => dispatch => {
-  dispatch({
-    type: SET_LOADING,
-    payload: true
-  });
-  fetch(url)
-    .then(res => res.json())
-    .then(json => {
-      dispatch({
-        type: FETCH_CARDS,
-        payload: json.cards
-      });
-      dispatch({
-        type: FILTER_CARDS,
-        payload: json.cards
-      });
-      dispatch({
-        type: SET_LOADING,
-        payload: false
-      });
-    })
-    .catch(error => console.error(error));
+const getCards = url => async dispatch => {
+  dispatch(actions.loadCardsBegin());
+
+  try {
+    await fetch(url)
+      .then(response => response.json())
+      .then(jsonResponse => {
+        dispatch(actions.loadCardsSuccess(jsonResponse.cards));
+        dispatch(actions.setFilteredCards(jsonResponse.cards));
+      })
+      .catch(error => actions.loadCardsError(error));
+  } catch (error) {
+    dispatch(actions.loadCardsError(error));
+  }
 };
 
-export const fetchSingleCard = url => dispatch => {
-  dispatch({
-    type: SET_LOADING,
-    payload: true
-  });
-  fetch(url)
-    .then(res => res.json())
-    .then(json => {
-      dispatch({
-        type: FETCH_SINGLE_CARD,
-        payload: json.card
-      });
-      dispatch({
-        type: SET_LOADING,
-        payload: false
-      });
-    })
-    .catch(error => console.error(error));
-};
+const setFilteredCards = actions.setFilteredCards;
+const setInputValue = actions.setInputValue;
+
+export { mockGetCards, getCards, setFilteredCards, setInputValue };

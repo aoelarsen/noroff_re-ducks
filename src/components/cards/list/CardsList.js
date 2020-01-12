@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { mockFetchCards } from "../../../redux/methods";
-import { setInputValue, setFilteredCards } from "../../../redux/actions";
+import { cardMethods } from "../../../redux/ducks/cards";
 import { BASE_URL } from "../../../constants/API";
 import Spinner from "react-bootstrap/Spinner";
 import Search from "./Search";
@@ -13,17 +12,19 @@ import CardsContainer from "../../ui/cardStyles/CardsContainer";
 import SpinnerContainer from "../../ui/SpinnerContainer";
 
 const CardsList = ({
-  mockFetchCards,
-  isLoading,
+  mockGetCards,
+  // getCards,
   cards,
+  isLoading,
+  hasLoadedCards,
   inputValue,
   setInputValue,
   setFilteredCards,
   filteredCards
 }) => {
   useEffect(() => {
-    mockFetchCards(BASE_URL);
-  }, [mockFetchCards]);
+    mockGetCards(BASE_URL);
+  }, [mockGetCards]);
 
   const clearInputValue = () => {
     setInputValue("");
@@ -85,9 +86,11 @@ const CardsList = ({
 };
 
 CardsList.propTypes = {
-  mockFetchCards: PropTypes.func.isRequired,
+  mockGetCards: PropTypes.func.isRequired,
+  getCards: PropTypes.func.isRequired,
   cards: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  hasLoadedCards: PropTypes.bool.isRequired,
   setInputValue: PropTypes.func.isRequired,
   inputValue: PropTypes.string.isRequired,
   setFilteredCards: PropTypes.func.isRequired,
@@ -96,15 +99,23 @@ CardsList.propTypes = {
 
 const mapStateToProps = store => {
   return {
-    cards: store.cardsCollection.allCards,
-    isLoading: store.isLoading.isLoading,
-    inputValue: store.filterReducer.inputValue,
-    filteredCards: store.filterReducer.filteredCards
+    cards: store.cardsReducer.cardsArray,
+    isLoading: store.cardsReducer.isLoadingCards,
+    hasLoadedCards: store.cardsReducer.hasLoadedCards,
+    inputValue: store.cardsReducer.inputValue,
+    filteredCards: store.cardsReducer.filteredCards,
+    serverError: store.cardsReducer.serverError
+    // cards: cardSelectors.cardsArray(store.cards),
+    // isLoading: cardSelectors.isLoading(store.isLoadingCards),
+    // hasLoadedCards: cardSelectors.hasLoadedCards(store.hasLoadedCards),
+    // inputValue: cardSelectors.inputValue(store.inputValue),
+    // filteredCards: cardSelectors.filteredCards(store.filteredCards)
   };
 };
 
 export default connect(mapStateToProps, {
-  mockFetchCards,
-  setInputValue,
-  setFilteredCards
+  mockGetCards: cardMethods.mockGetCards,
+  getCards: cardMethods.getCards,
+  setInputValue: cardMethods.setInputValue,
+  setFilteredCards: cardMethods.setFilteredCards
 })(CardsList);

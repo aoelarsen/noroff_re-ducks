@@ -1,16 +1,12 @@
 import { combineReducers } from "redux";
 import authReducer from "./authentication/reducers";
-import toggleInfo from "./toggle/reducers";
-import fetchCards from "./cards/reducers";
-import loadingReducer from "./loading/reducers";
-import filterReducer from "./searchCards/reducers";
+import toggleReducer from "./toggle/reducers";
+import cardsReducer from "./cards/reducers";
 
 const rootReducer = combineReducers({
-  authenticated: authReducer,
-  toggleInfo: toggleInfo,
-  cardsCollection: fetchCards,
-  isLoading: loadingReducer,
-  filterReducer: filterReducer
+  authReducer: authReducer,
+  toggleReducer: toggleReducer,
+  cardsReducer: cardsReducer
 });
 
 export default rootReducer;

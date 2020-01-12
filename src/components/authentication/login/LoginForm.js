@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
-import { authUser } from "../../../redux/actions";
+import { authMethods } from "../../../redux/ducks/authentication";
 
 import ErrorMessage from "../../error/ErrorMessage";
 
@@ -16,6 +16,13 @@ const LoginForm = ({ authUser }) => {
   const findUser = () => {
     const localStorage = window.localStorage;
     const foundUser = JSON.parse(localStorage.getItem("user"));
+
+    if (!foundUser) {
+      return {
+        validName: "",
+        validpass: ""
+      };
+    }
 
     return {
       validName: foundUser.userName,
@@ -79,4 +86,4 @@ LoginForm.propsTypes = {
   authUser: PropTypes.func.isRequired
 };
 
-export default connect(null, { authUser })(LoginForm);
+export default connect(null, { authUser: authMethods.authUser })(LoginForm);

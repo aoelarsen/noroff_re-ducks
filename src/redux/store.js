@@ -1,8 +1,6 @@
-import { createStore, compose, applyMiddleware, combineReducers } from "redux";
+import { createStore, compose, applyMiddleware } from "redux";
 import rootReducer from "./ducks";
 import thunk from "redux-thunk";
-
-
 
 const initialState = {};
 

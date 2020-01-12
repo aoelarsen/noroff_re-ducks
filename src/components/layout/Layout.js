@@ -7,7 +7,7 @@ import {
   NavLink
 } from "react-router-dom";
 import { connect } from "react-redux";
-import { logOutUser } from "../../redux/actions";
+import { logOutUser } from "../../redux/ducks/authentication/methods";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
@@ -75,8 +75,8 @@ Layout.propsTypes = {
 
 const mapStateToProps = store => {
   return {
-    auth: store.authenticated.isAuthenticated,
-    user: store.authenticated.displayName
+    auth: store.authReducer.isAuthenticated,
+    user: store.authReducer.displayName
   };
 };
 

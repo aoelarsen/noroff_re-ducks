@@ -1,5 +1,6 @@
 import toggleReducer from "./reducers";
+import * as toggleMethods from "./methods";
 
-export { default as toggleTypes } from "./types";
+export { toggleMethods };
 
 export default toggleReducer;

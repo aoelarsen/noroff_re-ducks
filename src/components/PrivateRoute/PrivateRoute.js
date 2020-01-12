@@ -15,7 +15,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
 
 const mapStateToProps = store => {
   return {
-    auth: store.authenticated.isAuthenticated
+    auth: store.authReducer.isAuthenticated
   };
 };
 
